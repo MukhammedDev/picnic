@@ -5,204 +5,646 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Пикникке Чакыруу — 6-июнь</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --green-dark:  #1e4d2b;
+      --green-mid:   #2d6a3f;
+      --green-light: #4a9060;
+      --gold:        #c9a84c;
+      --sky:         #7ab8d4;
+      --cream:       #faf6ef;
+      --text:        #1a1a1a;
+      --muted:       #5a5a5a;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f5f5f0;
-      color: #2c2c2c;
-      line-height: 1.7;
-      padding: 24px 16px 48px;
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 24px 80px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg,
+          #0a1628 0%,
+          #0e2240 15%,
+          #1a4060 35%,
+          #2a6e5e 55%,
+          #1e5c38 70%,
+          #164428 85%,
+          #0f2e1c 100%
+        );
+    }
+
+    /* Stars */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 8%, rgba(255,255,255,.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 5%, rgba(255,255,255,.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 40% 10%, rgba(255,255,255,.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 6%, rgba(255,255,255,.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 9%, rgba(255,255,255,.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 85% 4%, rgba(255,255,255,.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 15%, rgba(255,255,255,.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 12%, rgba(255,255,255,.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 33% 18%, rgba(255,255,255,.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 14%, rgba(255,255,255,.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 78% 18%, rgba(255,255,255,.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5%  20%, rgba(255,255,255,.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 95% 22%, rgba(255,255,255,.5) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* Mountains SVG layer */
+    .mountains {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    /* Sun/Moon glow */
+    .glow {
+      position: absolute;
+      top: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffe88a 0%, #f5c842 30%, rgba(245,200,66,.15) 70%, transparent 100%);
+      box-shadow: 0 0 60px 30px rgba(245,200,66,.25);
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translateX(-50%) scale(1);   opacity: 1; }
+      50%       { transform: translateX(-50%) scale(1.08); opacity: .85; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      max-width: 680px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.25);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 7vw, 4rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 20px rgba(0,0,0,.4);
+    }
+
+    .hero h1 span { color: var(--gold); }
+
+    .hero-intro {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.85);
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
+
+    .info-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .info-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.2);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: .95rem;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: 50px;
+    }
+
+    .info-chip .icon { font-size: 1.1rem; }
+
+    .info-chip a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,.5);
+      font-size: .75rem;
+      letter-spacing: 1px;
+      animation: bounce 2.5s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ── MAIN ── */
+    .main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 64px 20px 80px;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      margin-bottom: 32px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, #c9e0c9, transparent);
+    }
+
+    /* Person cards */
+    .cards {
+      display: grid;
+      gap: 20px;
     }
 
     .card {
-      max-width: 680px;
-      margin: 0 auto;
       background: #fff;
+      border-radius: 16px;
+      padding: 26px 28px;
+      box-shadow: 0 2px 16px rgba(0,0,0,.06);
+      border: 1px solid #ece8e0;
+      transition: transform .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0,0,0,.1);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--green-mid), var(--green-light));
+      border-radius: 4px 0 0 4px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .card-emoji {
+      width: 44px;
+      height: 44px;
       border-radius: 12px;
-      padding: 36px 32px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      background: linear-gradient(135deg, #e8f4ec, #c8e6ce);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
     }
 
-    h1 {
-      font-size: 1.7rem;
+    .card-name {
       font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 20px;
-      letter-spacing: -0.3px;
+      font-size: 1.05rem;
+      color: var(--green-dark);
+      line-height: 1.3;
     }
 
-    .intro {
-      font-size: 1rem;
-      margin-bottom: 28px;
+    .card-role {
+      font-size: .8rem;
+      color: var(--green-light);
+      font-weight: 600;
+      letter-spacing: .5px;
+      margin-top: 2px;
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      gap: 7px;
+    }
+
+    .card ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .93rem;
       color: #444;
     }
 
-    .details {
-      background: #f9f7f3;
-      border-left: 3px solid #6b8f5e;
-      border-radius: 0 8px 8px 0;
-      padding: 16px 20px;
-      margin-bottom: 32px;
-      font-size: 1rem;
-    }
-    .details p { margin: 4px 0; }
-
-    h2 {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: #1a1a1a;
-      margin: 28px 0 14px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid #e8e8e8;
+    .card ul li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: .65rem;
+      margin-top: 5px;
+      flex-shrink: 0;
     }
 
-    .person {
-      margin-bottom: 22px;
-    }
-
-    .person-name {
-      font-weight: 600;
-      color: #3a3a3a;
-      font-size: 1rem;
-      margin-bottom: 6px;
-    }
-
-    .person ul {
-      padding-left: 20px;
-      color: #555;
-      font-size: 0.95rem;
-    }
-
-    .person ul li { margin: 3px 0; }
-
+    /* Note box */
     .note {
-      background: #fef9ec;
-      border: 1px solid #e8d98a;
-      border-radius: 8px;
-      padding: 14px 18px;
-      font-size: 0.9rem;
-      color: #5a4e20;
-      margin: 16px 0 8px;
+      margin-top: 28px;
+      background: linear-gradient(135deg, #fffbf0, #fef5d8);
+      border: 1px solid #e8d48a;
+      border-radius: 14px;
+      padding: 18px 22px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
     }
 
-    .personal-list {
-      padding-left: 20px;
-      color: #555;
-      font-size: 0.95rem;
-      margin: 8px 0;
-    }
-    .personal-list li { margin: 4px 0; }
+    .note-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
 
+    .note-text {
+      font-size: .9rem;
+      color: #5a4a1a;
+      line-height: 1.6;
+    }
+
+    /* Personal items */
+    .personal {
+      margin-top: 40px;
+      background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+      border-radius: 20px;
+      padding: 32px;
+      color: #fff;
+    }
+
+    .personal h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 18px;
+    }
+
+    .personal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .personal-item {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: .9rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .personal-item span:first-child { font-size: 1.2rem; }
+
+    /* Footer */
     .footer {
-      margin-top: 36px;
-      padding-top: 20px;
-      border-top: 1px solid #e8e8e8;
-      font-size: 0.95rem;
-      color: #666;
-      font-style: italic;
+      text-align: center;
+      margin-top: 56px;
+      padding: 36px 24px;
+      background: linear-gradient(180deg, transparent, rgba(30,77,43,.06));
+      border-radius: 20px;
     }
 
-    @media (max-width: 480px) {
-      .card { padding: 24px 18px; }
-      h1 { font-size: 1.4rem; }
+    .footer-dua {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--green-dark);
+      line-height: 1.8;
+      max-width: 500px;
+      margin: 0 auto 16px;
+    }
+
+    .footer-sub {
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    /* ── CTA block ── */
+    .cta-block {
+      margin-top: 40px;
+      background: #fff;
+      border-radius: 20px;
+      border: 1px solid #ece8e0;
+      box-shadow: 0 2px 16px rgba(0,0,0,.06);
+      overflow: hidden;
+    }
+
+    .cta-top, .cta-food, .cta-final {
+      padding: 24px 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .cta-top .cta-icon { font-size: 1.8rem; flex-shrink: 0; margin-top: 2px; }
+    .cta-top p { font-size: .95rem; color: #444; line-height: 1.7; }
+
+    .cta-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #e0dbd0, transparent);
+      margin: 0 20px;
+    }
+
+    .cta-food {
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      background: linear-gradient(135deg, #f9f7f0, #fff);
+    }
+
+    .cta-food span { font-size: 1.6rem; }
+    .cta-food p { font-size: .95rem; color: #444; line-height: 1.7; flex: 1; min-width: 200px; }
+
+    .cta-final {
+      flex-direction: column;
+      gap: 10px;
+      background: linear-gradient(135deg, #f0f7f2, #fff);
+    }
+
+    .cta-final p { font-size: .95rem; color: #444; line-height: 1.7; }
+    .cta-bold { font-weight: 700 !important; color: var(--green-dark) !important; }
+
+    .cta-highlight {
+      margin-top: 6px;
+      background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 14px 20px;
+      border-radius: 12px;
+      line-height: 1.5;
+      width: 100%;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { box-shadow: 0 4px 16px rgba(30,77,43,.25); }
+      50%       { box-shadow: 0 6px 24px rgba(30,77,43,.45); }
+    }
+
+    @media (max-width: 500px) {
+      .main { padding: 48px 16px 60px; }
+      .card { padding: 20px; }
+      .personal { padding: 24px 18px; }
     }
   </style>
 </head>
 <body>
-<div class="card">
 
-  <h1>🌿 Пикникке Чакыруу</h1>
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="glow"></div>
 
-  <p class="intro">
-    Ассаляму алейкум, урматтуу байкелер!<br><br>
-    Буйруса, <strong>6-июнь</strong> күнү баарыбыз биргеликте эс алып, пикир алышып, жакшы маанай тартуулоо максатында пикникке чыгалы деп жатабыз.
-  </p>
+  <!-- Mountains SVG -->
+  <svg class="mountains" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- back mountains (lighter) -->
+    <path d="M0,220 L120,120 L220,180 L340,60 L460,150 L580,80 L700,160 L820,40 L940,130 L1060,70 L1180,140 L1300,90 L1440,160 L1440,320 L0,320 Z"
+          fill="rgba(45,106,63,0.45)"/>
+    <!-- front mountains (darker) -->
+    <path d="M0,280 L80,200 L180,250 L300,160 L420,230 L540,155 L660,220 L780,140 L900,210 L1020,160 L1140,240 L1260,180 L1380,250 L1440,230 L1440,320 L0,320 Z"
+          fill="rgba(22,68,40,0.85)"/>
+    <!-- river/ground -->
+    <path d="M0,305 Q360,290 720,308 Q1080,325 1440,305 L1440,320 L0,320 Z"
+          fill="#0f2e1c"/>
+    <!-- water shimmer -->
+    <path d="M580,312 Q660,306 740,312 Q820,318 900,312" stroke="rgba(122,184,212,0.5)" stroke-width="2" fill="none"/>
+  </svg>
 
-  <div class="details">
-    <p>📅 <strong>Күнү:</strong> 6-июнь</p>
-    <p>🕘 <strong>Убактысы:</strong> Эрте менен саат 09:00</p>
-    <p>📍 <strong>Дареги:</strong> <a href="https://2gis.kg/bishkek/geo/70030076151448802" target="_blank" rel="noopener" style="color:#4a7c3f;">Центральная улица, 15 (2GIS картада ач)</a></p>
-  </div>
-
-  <p style="margin-bottom:8px; color:#444;">
-    Ар бирибиз белгиленген милдеттерди жоопкерчилик менен аткарып келсек, иш-чарабыз дагы да көрктүү жана берекелүү өтөт.
-  </p>
-
-  <h2>Жооптуу адамдар жана милдеттер</h2>
-
-  <div class="person">
-    <div class="person-name">Мухаммед</div>
-    <ul>
-      <li>Курмандыкка устаз тарабынан берилген этти алып келүү</li>
-      <li>Картошка алуу</li>
-      <li>Үйдөн куурдак даярдап келүү</li>
-      <li>1 термос чай демдеп келүү</li>
-    </ul>
-  </div>
-
-  <div class="person">
-    <div class="person-name">Дилмурат байке</div>
-    <ul>
-      <li>4 даана жер төшөк</li>
-      <li>1 дасторкон алып келүү</li>
-    </ul>
-  </div>
-
-  <div class="person">
-    <div class="person-name">Курстан байке, Керим байке</div>
-    <ul>
-      <li>Дасторконду уюштуруу жана жасалгалоо</li>
-      <li>Тамактан кийин дасторконду жыйноону уюштуруу</li>
-    </ul>
-  </div>
-
-  <div class="person">
-    <div class="person-name">Алишер байке, Адил байке — Программа жана оюн-зоок</div>
-    <ul>
-      <li>Футбол</li>
-      <li>Учурдагы кызыктуу тренд оюндар</li>
-      <li>Мөмө-жемиш менен уюштурулуучу оюндар</li>
-      <li>Чөйрөгө ылайыктуу башка оюн-зооктор</li>
-    </ul>
-  </div>
-
-  <div class="person">
-    <div class="person-name">Улан байке, Анас байке — Шашлык</div>
-    <ul>
-      <li>Шашлык тоок этинен даярдалат</li>
-      <li>Этти устаз менен байланышып, адал продукциядан алуу</li>
-      <li>Мангал, көмүр, шампур жана шашлыкка керектүү бардык жабдыктарды камсыз кылуу</li>
-    </ul>
-  </div>
-
-  <div class="person">
-    <div class="person-name">Исабек байке, Белек байке — Азык-түлүк</div>
-    <ul>
-      <li>Самсы (ар бир адамга 3 даанадан, Мадина базарынан)</li>
-      <li>Семичка</li>
-      <li>Мөмө-жемиштер</li>
-      <li>Ысык нан</li>
-      <li>Газдалбаган суусундуктар</li>
-      <li>Салфеткалар</li>
-      <li>Бир жолку идиш-аяк жана приборлор</li>
-    </ul>
-    <div class="note">
-      ⚠️ Азык-түлүк алууда ашыкча ысырапка жол бербейли. Себеби дасторкондо шашлык жана куурдак да болот.
+  <div class="hero-content">
+    <div class="hero-badge">🌿 6-июнь, 2026</div>
+    <h1>Пикникке<br/><span>Чакыруу</span></h1>
+    <p class="hero-intro">
+      Ассаляму алейкум, урматтуу байкелер!<br/>
+      Тоонун коюнунда биргеликте эс алып, пикир алышып, жакшы маанай тартуулоо максатында чыгалы.
+    </p>
+    <div class="info-row">
+      <div class="info-chip"><span class="icon">🕘</span> Саат 09:00</div>
+      <div class="info-chip">
+        <span class="icon">📍</span>
+        <a href="https://2gis.kg/bishkek/geo/70030076151448802" target="_blank" rel="noopener">
+          Центральная, 15 — 2GIS
+        </a>
+      </div>
     </div>
   </div>
 
-  <h2>Ар бир катышуучу өзү менен ала келсин</h2>
-  <ul class="personal-list">
-    <li>Аба ырайына жараша жылуу кийим (тоолуу аймак болгондуктан)</li>
-    <li>Футбол формасы</li>
-    <li>Жеке керектүү буюмдар</li>
-  </ul>
+  <div class="scroll-hint">
+    ▼ &nbsp; төмөн жылдыр
+  </div>
+</section>
 
-  <div class="footer">
-    Аллах Таала жолубузду жеңил кылып, жолугушуубузду берекелүү жана пайдалуу кылсын. Баарыңыздарды күтөбүз!
+<!-- ═══════════ MAIN ═══════════ -->
+<main class="main">
+
+  <div class="section-label">Жооптуу адамдар жана милдеттер</div>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-emoji">🍖</div>
+        <div>
+          <div class="card-name">Мухаммед</div>
+          <div class="card-role">Ет & Куурдак</div>
+        </div>
+      </div>
+      <ul>
+        <li>Курмандыкка устаз тарабынан берилген этти алып келүү</li>
+        <li>Картошка алуу</li>
+        <li>Үйдөн куурдак даярдап келүү</li>
+        <li>1 термос чай демдеп келүү</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-emoji">🛋️</div>
+        <div>
+          <div class="card-name">Дилмурат байке</div>
+          <div class="card-role">Жер төшөк & Дасторкон</div>
+        </div>
+      </div>
+      <ul>
+        <li>4 даана жер төшөк</li>
+        <li>1 дасторкон алып келүү</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-emoji">🌸</div>
+        <div>
+          <div class="card-name">Курстан байке, Керим байке</div>
+          <div class="card-role">Дасторкон уюштуруу</div>
+        </div>
+      </div>
+      <ul>
+        <li>Дасторконду уюштуруу жана жасалгалоо</li>
+        <li>Тамактан кийин дасторконду жыйноону уюштуруу</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-emoji">⚽</div>
+        <div>
+          <div class="card-name">Алишер байке, Адил байке</div>
+          <div class="card-role">Программа & Оюн-зоок</div>
+        </div>
+      </div>
+      <ul>
+        <li>Футбол</li>
+        <li>Учурдагы кызыктуу тренд оюндар</li>
+        <li>Мөмө-жемиш менен уюштурулуучу оюндар</li>
+        <li>Чөйрөгө ылайыктуу башка оюн-зооктор</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-emoji">🔥</div>
+        <div>
+          <div class="card-name">Улан байке, Анас байке</div>
+          <div class="card-role">Шашлык</div>
+        </div>
+      </div>
+      <ul>
+        <li>Шашлык тоок этинен даярдалат</li>
+        <li>Этти устаз менен байланышып, адал продукциядан алуу</li>
+        <li>Мангал, көмүр, шампур жана шашлыкка керектүү бардык жабдыктарды камсыз кылуу</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-emoji">🛒</div>
+        <div>
+          <div class="card-name">Исабек байке, Белек байке</div>
+          <div class="card-role">Азык-түлүк</div>
+        </div>
+      </div>
+      <ul>
+        <li>Самсы — ар бир адамга 3 даанадан (Мадина базарынан)</li>
+        <li>Семичка</li>
+        <li>Мөмө-жемиштер</li>
+        <li>Ысык нан</li>
+        <li>Газдалбаган суусундуктар</li>
+        <li>Салфеткалар</li>
+        <li>Бир жолку идиш-аяк жана приборлор</li>
+      </ul>
+    </div>
+
+  </div><!-- /cards -->
+
+  <div class="note">
+    <div class="note-icon">⚠️</div>
+    <div class="note-text">
+      Азык-түлүк алууда ашыкча ысырапка жол бербейли. Себеби дасторкондо шашлык жана куурдак да болот.
+    </div>
   </div>
 
-</div>
+  <!-- Personal items -->
+  <div class="personal">
+    <h2>Ар бир катышуучу өзү менен ала келсин</h2>
+    <div class="personal-grid">
+      <div class="personal-item"><span>🧥</span><span>Жылуу кийим (тоолуу аймак)</span></div>
+      <div class="personal-item"><span>👟</span><span>Футбол формасы</span></div>
+      <div class="personal-item"><span>🎒</span><span>Жеке керектүү буюмдар</span></div>
+    </div>
+  </div>
+
+  <!-- Closing call-to-action -->
+  <div class="cta-block">
+    <div class="cta-top">
+      <div class="cta-icon">💰</div>
+      <p>Баарыңыздар бөлүнгөн жумуштарыңызды аткарып, акчаларыңызды тактап коюңуздар. Ошол жакка барганда жалпы сумманы чогултуп, баарыбызга бөлүп салабыз.</p>
+    </div>
+    <div class="cta-divider"></div>
+    <div class="cta-food">
+      <span>🥩</span><span>🍢</span><span>🍉</span>
+      <p>Буйруса уй эти, куурдак, шашлыкка кенен жетет. Калган продукттарга көп деле кетпейт, насип кылса. 10 киши тегерегинде жетчүдөй продукт алсак болот.</p>
+    </div>
+    <div class="cta-divider"></div>
+    <div class="cta-final">
+      <p>Баарыңыздар келип, тоо койнунда шашлык, куурдак, мөмө-жемиш жеп, эс алып, ойноп, баарлашып кетели.</p>
+      <p class="cta-bold">Бул бир туугандыгыбызды бекемдейт.</p>
+      <div class="cta-highlight">Акырында: кыймыл-аракет менен коштолгон кызыктуу учур болсун 🙂</div>
+    </div>
+  </div>
+
+  <!-- Footer / dua -->
+  <div class="footer">
+    <p class="footer-dua">
+      Аллах Таала жолубузду жеңил кылып,<br/>
+      жолугушуубузду берекелүү жана пайдалуу кылсын.
+    </p>
+    <p class="footer-sub">Баарыңыздарды күтөбүз! 🌿</p>
+  </div>
+
+</main>
+
 </body>
 </html>
