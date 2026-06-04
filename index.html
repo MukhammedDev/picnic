@@ -459,10 +459,23 @@
       50%       { box-shadow: 0 6px 24px rgba(30,77,43,.45); }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 600px) {
       .main { padding: 48px 16px 60px; }
       .card { padding: 20px; }
       .personal { padding: 24px 18px; }
+
+      .scroll-hint {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        z-index: 999;
+        font-size: 1.2rem;
+        font-weight: 800;
+        padding: 18px 40px;
+        border-width: 2.5px;
+        box-shadow: 0 8px 32px rgba(0,0,0,.5);
+        background: linear-gradient(135deg, rgba(201,168,76,.9), rgba(255,255,255,.25));
+      }
     }
   </style>
 </head>
@@ -505,15 +518,24 @@
     </div>
   </div>
 
-  <div class="scroll-hint" id="scrollBtn" onclick="document.querySelector('.main').scrollIntoView({behavior:'smooth'})">
+  <div class="scroll-hint" id="scrollBtn" onclick="scrollDown()">
     ▼ &nbsp; төмөн жылдыр
   </div>
 </section>
 
 <script>
-  setTimeout(function() {
+  function scrollDown() {
     document.querySelector('.main').scrollIntoView({ behavior: 'smooth' });
-  }, 3000);
+    document.getElementById('scrollBtn').style.display = 'none';
+  }
+  setTimeout(function() {
+    scrollDown();
+  }, 3500);
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 80) {
+      document.getElementById('scrollBtn').style.display = 'none';
+    }
+  });
 </script>
 
 <!-- ═══════════ MAIN ═══════════ -->
